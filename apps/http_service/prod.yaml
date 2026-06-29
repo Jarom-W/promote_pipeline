@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: http-service-prod
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/jarom-w/sample_http
+    targetRevision: main
+    path: charts/http_service
+    helm:
+      valueFiles:
+        - ../../environments/http_service/prod/http-service.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
