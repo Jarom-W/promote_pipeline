@@ -1,0 +1,5 @@
+image:
+  repository: ghcr.io/jarom-w/http_service
+  tag: a798afb
+
+replicas: 2
