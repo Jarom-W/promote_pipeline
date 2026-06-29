@@ -17,7 +17,7 @@ spec:
       ref: values
       helm:
         valueFiles:
-          - $values/environments/http_service/staging/staging.yaml
+          - $values/environments/http_service/staging/http-service.yaml
 
   destination:
     server: https://kubernetes.default.svc
