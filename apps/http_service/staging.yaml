@@ -15,6 +15,9 @@ spec:
     - repoURL: https://github.com/jarom-w/promote_pipeline
       targetRevision: main
       ref: values
+      helm:
+        valueFiles:
+          - $values/environments/http_service/staging/staging.yaml
 
   destination:
     server: https://kubernetes.default.svc
@@ -24,3 +27,4 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
