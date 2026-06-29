@@ -2,4 +2,4 @@ image:
   repository: ghcr.io/jarom-w/http_service
   tag: 3bddaa7
 
-replicaCount: 3
+replicaCount: 5
