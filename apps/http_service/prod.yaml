@@ -6,13 +6,14 @@ metadata:
 spec:
   project: default
 
-  source:
-    repoURL: https://github.com/jarom-w/sample_http
-    targetRevision: main
-    path: charts/http_service
-    helm:
-      valueFiles:
-        - ../../environments/http_service/prod/http-service.yaml
+  sources:
+    - repoURL: https://github.com/jarom-w/sample_http
+      targetRevision: main
+      path: charts/http_service
+
+    - repoURL: https://github.com/jarom-w/promote_pipeline
+      targetRevision: main
+      ref: values
 
   destination:
     server: https://kubernetes.default.svc
