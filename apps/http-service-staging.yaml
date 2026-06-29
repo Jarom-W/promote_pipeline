@@ -5,19 +5,13 @@ metadata:
   namespace: argocd
 spec:
   project: default
-
-  sources:
-    #Application repo (Helm chart)
-    - repoURL: https://github.com/jarom-w/sample_http
-      targetRevision: main
-      path: charts/http_service
-
-    - repoURL: https://github.com/jarom-w/promote_pipeline
-      targetRevision: main
-      ref: values
-      helm:
-        valueFiles:
-          - $values/environments/http_service/staging/http-service.yaml
+  source:
+    repoURL: https://github.com/jarom-w/promote_pipeline
+    targetRevision: main
+    path: charts/http_service
+    helm:
+      valueFiles:
+        - ../../environments/http_service/staging/http-service.yaml
 
   destination:
     server: https://kubernetes.default.svc
@@ -27,4 +21,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-
