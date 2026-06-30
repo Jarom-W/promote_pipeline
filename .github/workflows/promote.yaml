@@ -1,0 +1,50 @@
+name: Promote Artifacts Through Environments
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_env:
+        description: "Source environment (dev, staging)"
+        required: true
+      target_env:
+        description: "Target environment (staging, prod)"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run promotion script
+        run: |
+          python scripts/promote.py \
+          ${{ inputs.source_env }} \
+          ${{ inputs.target_env }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: "Promote ${{ inputs.source_env }} -> ${{ inputs.target_env }}"
+          body: |
+            Automated promotion
+
+            Source: ${{ inputs.source_env }}
+            Target: ${{ inputs.target_env }}
+
+          branch: promote-${{ inputs.source_env }}-to-${{ inputs.target_env }}
+          commit-message: "chore: promote $${{ inputs.source_env }} -> ${{ inputs.target_env }}"
